@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>save</title>
+  <!-- 부트스트랩 CSS 연결 (CDN or 다운받은 CSS) -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5" style="max-width: 500px;">
+  <h2 class="text-center text-primary mb-4">회원가입</h2>
+
+  <!-- 회원가입 폼 -->
+  <form action="/member/save" method="post" class="p-4 border rounded bg-white shadow-sm">
+    <div class="mb-3">
+      <label for="memberEmail" class="form-label">이메일</label>
+      <input type="text" class="form-control" id="memberEmail" name="memberEmail" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="memberPassword" class="form-label">비밀번호</label>
+      <input type="password" class="form-control" id="memberPassword" name="memberPassword" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="memberName" class="form-label">이름</label>
+      <input type="text" class="form-control" id="memberName" name="memberName" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" value="회원가입">회원가입</button>
+  </form>
+</div>
+
+</body>
+</html>
