@@ -3,7 +3,6 @@ package com.example.member.controller;
 import com.example.member.dto.MemberDTO;
 import com.example.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
-import java.lang.reflect.Member;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
@@ -59,11 +56,35 @@ public class MemberController {
         return "list";
     }
 
+
     @GetMapping("/member/{id}")
     public String findById(@PathVariable Long id, Model model) {
         MemberDTO memberDTO = memberService.findById(id);
-        model.addAttribute("member",memberDTO);
+        model.addAttribute("member", memberDTO);
         return "detail";
     }
 
+    @GetMapping("/member/update")
+    public String updateForm(HttpSession session,Model model) {
+        String myEmail = (String) session.getAttribute("loginEmail");
+        MemberDTO memberDTO = memberService.updateForm(myEmail);
+        model.addAttribute("updateMember",memberDTO);
+        return  "update";
+    }
+
+    @PostMapping("/member/update")
+    public String update(@ModelAttribute MemberDTO memberDTO) {
+       memberService.update(memberDTO);
+       return "redirect:/member/"+memberDTO.getId();
+    }
+    @GetMapping("member/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        memberService.delete(id);
+        return "redirect:/member/";
+    }
+    @GetMapping("member/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
 }

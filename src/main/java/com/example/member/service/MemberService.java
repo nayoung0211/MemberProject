@@ -64,4 +64,22 @@ public class MemberService {
             return null;
         }
     }
+
+    public MemberDTO updateForm(String myEmail) {
+        Optional<MemberEntity> byEmail = memberRepository.findByMemberEmail(myEmail);
+        if(byEmail.isPresent()) {
+            return MemberDTO.toMemberDTO(byEmail.get());
+        }else{
+            return null;
+        }
+
+    }
+
+    public void update(MemberDTO memberDTO) {
+        memberRepository.save(MemberEntity.toUpdateMemberEntity(memberDTO));
+    }
+
+    public void delete(Long id) {
+        memberRepository.deleteById(id);
+    }
 }

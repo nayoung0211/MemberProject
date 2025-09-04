@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원정보 수정</title>
+  <!-- Bootstrap CSS 연결 -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5" style="max-width: 500px;">
+  <h2 class="text-center text-primary mb-4">회원정보 수정</h2>
+
+  <form action="/member/update" method="post" class="p-4 border rounded bg-white shadow-sm">
+    <!-- 숨김 필드 (id) -->
+    <input type="hidden" th:value="${updateMember.id}" name="id">
+
+    <div class="mb-3">
+      <label for="memberEmail" class="form-label">이메일</label>
+      <input type="text" th:value="${updateMember.memberEmail}" name="memberEmail"
+             id="memberEmail" class="form-control" readonly>
+    </div>
+
+    <div class="mb-3">
+      <label for="memberPassword" class="form-label">비밀번호</label>
+      <input type="text" th:value="${updateMember.memberPassword}" name="memberPassword"
+             id="memberPassword" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="memberName" class="form-label">이름</label>
+      <input type="text" th:value="${updateMember.memberName}" name="memberName"
+             id="memberName" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">정보수정</button>
+  </form>
+</div>
+
+</body>
+</html>
