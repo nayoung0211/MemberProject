@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequiredArgsConstructor
 @Controller
@@ -86,5 +88,15 @@ public class MemberController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "index";
+    }
+    @PostMapping("member/email-check")
+    public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail) {
+        System.out.println("memberEmail:"+memberEmail);
+        String checkResult = memberService.emailCheck(memberEmail);
+        if(checkResult != null){
+            return "ok";
+        }else{
+            return "no";
+        }
     }
 }

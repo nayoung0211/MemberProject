@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>save</title>
+  <!--jquery cdn-->
+  <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"></script>
   <!-- 부트스트랩 CSS 연결 (CDN or 다운받은 CSS) -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -15,7 +20,8 @@
   <form action="/member/save" method="post" class="p-4 border rounded bg-white shadow-sm">
     <div class="mb-3">
       <label for="memberEmail" class="form-label">이메일</label>
-      <input type="text" class="form-control" id="memberEmail" name="memberEmail" required>
+      <input type="text" class="form-control" id="memberEmail" onkeyup="emailCheck()" name="memberEmail" required>
+      <span id="check-result"></span>
     </div>
 
     <div class="mb-3">
@@ -33,4 +39,35 @@
 </div>
 
 </body>
+<script th:inline ="javascript">
+const emailCheck = () => {
+  const email = document.getElementById("memberEmail").value;
+  const checkResult = document.getElementById("check-result");
+  console.log("입력값 :",email);
+  $.ajax({
+    type : "POST",
+    url : "/member/email-check",
+    data : {
+      "memberEmail" : email
+    },
+    success : function(res){
+      console.log("요청성공",res);
+      if(res == "ok"){
+        console.log("사용 가능한 이메일");
+        checkResult.style.color = "green";
+        checkResult.innerHTML = "사용 가능한 이메일";
+      }else{
+        console.log("이미 사용중인 메일");
+        checkResult.style.color = "red";
+        checkResult.innerHTML = "이미 사용중인 메일";
+      }
+    },
+    error : function(err){
+      console.log("에러발생",err);
+    }
+  });
+}
+</script>
 </html>
+
+
